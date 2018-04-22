@@ -3,17 +3,25 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 5000;
 
-const allCalculations = require('./modules/calcmod')
+const Calculator = require('./modules/calcmod');
+const allCalculations = new Calculator();
+
 app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/calculations', (req, res) => {
- res.send(allCalculations); 
+ res.send(allCalculations.history); 
 });
 
-app.post('/addCalc', (req, res) => {
-    console.log(req.body);
-    allCalculations.push(req.body);
+app.post('/addToHistory', (req, res) => {
+    allCalculations.x = req.body.x;
+    allCalculations.y = req.body.y;
+    allCalculations.type = req.body.type;
+    console.log(allCalculations);
+    allCalculations.compute();
+    console.log(allCalculations);
+
+
         res.sendStatus(200);
 });
 

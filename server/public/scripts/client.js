@@ -4,45 +4,83 @@ $(document).ready(onReady);
 
 function onReady() {
     console.log('jquery is loaded')
-    $('#submitBtn').on('click', clickHandler);
+    $(".calcButton").on('click', clickHandler)
+    // $('#addBtn').on('click', addClickHandler);
+    // $('#subtractBtn').on('click', subtractClickHandler);
+    // $('#multiplyBtn').on('click', multiplyClickHandler);
+    // $('#divideBtn').on('click', divideClickHandler);
     getAll();
+    $("#clearBtn").on('click', clearAll)
+
 }
 
-function clickHandler(){
+function clickHandler() {
     console.log('in clickHandler');
-    addNew();
+    addToHistory($(this).text());
+    // answerFinder();
 }
 
-function getAll(){
+function clearAll(){
+    $('#outputSpan').text('');
+    $('input').val('');
+}
+
+
+//  function answerFinder(){
+//     if($('#operator').val() == "+"){
+//         const answer = Number($('#number1').val()) + Number($('#number2').val());
+//         $('#answerSpan').text( answer );
+//     console.log( answer );
+//     }
+
+//     else if($('#operator').val() == "*"){
+//         const answer = Number($('#number1').val()) * Number($('#number2').val());
+//         $('#answerSpan').text( answer );
+//     }
+
+//     else if($('#operator').val() == "-"){
+//         const answer = Number($('#number1').val()) - Number($('#number2').val());
+//         $('#answerSpan').text( answer );
+//     }
+
+//     else if($('#operator').val() == "/"){
+//         const answer = Number($('#number1').val()) / Number($('#number2').val());
+//         $('#answerSpan').text( answer );
+//     }
+//  }
+
+
+function getAll() {
     $.ajax({
         method: 'GET',
         url: '/calculations'
     })
 
-    .then(function(response) {
-        console.log(response);
-        // $('#outputDiv').empty();
-        response.forEach(function(calc){
-            $('#outputDiv').prepend(`<p>${calc.x} ${calc.type} ${calc.y}`);
+        .then(function (response) {
+            console.log(response);
+            $('#outputSpan').empty();
+            response.forEach(function (calc) {
+                $('#outputSpan').prepend('<p>' + calc + '</p>');
+            });
         });
-    });
 }
 
-function addNew(){
-const newCalc = {
-    x: $('#number1').val(),
-    y: $('#number2').val(),
-    type: $('#operator').val()
-};
-console.log('new calc object', newCalc);
+function addToHistory(type) {
+    console.log(type);
+    let newCalc = {
+        x: $('#number1').val(),
+        y: $('#number2').val(),
+        type: type
+    }
 
-$.ajax({
-    method: 'POST',
-    url: '/addCalc',
-    data: newCalc
-})
-.then(function(response){
-    console.log(response)
-    getAll();
-});
+
+    $.ajax({
+        method: 'POST',
+        url: '/addToHistory',
+        data: newCalc
+    })
+        .then(function (response) {
+            console.log(response)
+            getAll();
+        });
 }
