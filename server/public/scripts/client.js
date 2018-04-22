@@ -20,10 +20,7 @@ function clickHandler() {
     // answerFinder();
 }
 
-function clearAll(){
-    $('#outputSpan').text('');
-    $('input').val('');
-}
+
 
 
 //  function answerFinder(){
@@ -58,9 +55,9 @@ function getAll() {
 
         .then(function (response) {
             console.log(response);
-            $('#outputSpan').empty();
+            $('#outputDiv').empty();
             response.forEach(function (calc) {
-                $('#outputSpan').prepend('<p>' + calc + '</p>');
+                $('#outputDiv').prepend('<p>' + calc + '</p>');
             });
         });
 }
@@ -82,5 +79,20 @@ function addToHistory(type) {
         .then(function (response) {
             console.log(response)
             getAll();
+        });
+}
+
+function clearAll() {
+    $('#outputDiv').text('');
+    $('input').val('');
+
+
+    $.ajax({
+        method: 'GET',
+        url: '/clear-all'
+    })
+
+        .then(function (response) {
+            console.log(response);
         });
 }

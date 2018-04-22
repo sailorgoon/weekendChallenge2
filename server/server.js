@@ -20,11 +20,17 @@ app.post('/addToHistory', (req, res) => {
     console.log(allCalculations);
     allCalculations.compute();
     console.log(allCalculations);
-
-
-        res.sendStatus(200);
+    res.sendStatus(200);
 });
+
+
+app.get('/clear-all', (req, res) => {
+    allCalculations.history = [];
+    res.sendStatus(200);
+})
 
 app.listen(PORT, () => {
     console.log('listening on 5000');
     });
+
+   
