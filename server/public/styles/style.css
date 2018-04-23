@@ -38,3 +38,10 @@ button {
     padding-left: 10px;
     margin-top: 5px;
 }
+
+#artist {
+    padding-right:30px;
+    font-size: 20px;
+    color: white;
+    float: right;
+}
