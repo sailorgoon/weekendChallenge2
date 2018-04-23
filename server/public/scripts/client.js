@@ -4,7 +4,7 @@ $(document).ready(onReady);
 
 function onReady() {
     console.log('jquery is loaded')
-    $(".calcButton").on('click', clickHandler)
+    $(".calcButton").on('click', clickHandler);
     getAll();
     $("#clearBtn").on('click', clearAll)
 
@@ -13,7 +13,7 @@ function onReady() {
 function clickHandler() {
     console.log('in clickHandler');
     addToHistory($(this).text());
-
+}
 
 function getAll() {
     $.ajax({
